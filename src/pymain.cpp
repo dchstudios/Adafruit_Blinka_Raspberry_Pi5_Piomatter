@@ -104,6 +104,9 @@ make_piomatter(Colorspace c, Pinout p, py::buffer buffer,
     case AdafruitMatrixBonnetBGR:
         return make_piomatter_p<piomatter::adafruit_matrix_bonnet_pinout_bgr>(
             c, buffer, geometry);
+    case AdafruitMatrixBonnetRBG:
+        return make_piomatter_p<piomatter::adafruit_matrix_bonnet_pinout_rbg>(
+            c, buffer, geometry);
     case Active3:
         return make_piomatter_p<piomatter::active3_pinout>(c, buffer, geometry);
     case Active3BGR:
@@ -146,8 +149,8 @@ PYBIND11_MODULE(_piomatter, m) {
                "Adafruit Matrix Bonnet or Matrix Hat with BGR color order")
         .value("AdafruitMatrixHat", Pinout::AdafruitMatrixBonnet,
                "Adafruit Matrix Bonnet or Matrix Hat")
-        .value("AdafruitMatrixHatBGR", Pinout::AdafruitMatrixBonnetBGR,
-               "Adafruit Matrix Bonnet or Matrix Hat with BGR color order")
+        .value("AdafruitMatrixHatRBG", Pinout::AdafruitMatrixBonnetRBG,
+               "Adafruit Matrix Bonnet or Matrix Hat with RBG color order")
         .value("Active3", Pinout::Active3, "Active-3 or compatible board")
         .value("Active3BGR", Pinout::Active3BGR,
                "Active-3 or compatible board with BGR color order");
