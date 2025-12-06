@@ -70,8 +70,10 @@ enum Colorspace { RGB565, RGB888, RGB888Packed };
 enum Pinout {
     AdafruitMatrixBonnet,
     AdafruitMatrixBonnetBGR,
+    AdafruitMatrixBonnetRBG
     Active3,
     Active3BGR,
+    Active3RBG,
 };
 
 template <class pinout>
@@ -104,11 +106,15 @@ make_piomatter(Colorspace c, Pinout p, py::buffer buffer,
     case AdafruitMatrixBonnetBGR:
         return make_piomatter_p<piomatter::adafruit_matrix_bonnet_pinout_bgr>(
             c, buffer, geometry);
+    case AdafruitMatrixBonnetRBG:
+        return make_piomatter_p<piomatter::adafruit_matrix_bonnet_pinout_rbg>(
+            c, buffer, geometry);
     case Active3:
         return make_piomatter_p<piomatter::active3_pinout>(c, buffer, geometry);
     case Active3BGR:
-        return make_piomatter_p<piomatter::active3_pinout_bgr>(c, buffer,
-                                                               geometry);
+        return make_piomatter_p<piomatter::active3_pinout_bgr>(c, buffer, geometry);
+    case Active3RBG:
+        return make_piomatter_p<piomatter::active3_pinout_rbg>(c, buffer, geometry);
     }
     throw std::runtime_error(py::str("Invalid pinout {!r}")
                                  .attr("format")(p)
@@ -144,13 +150,19 @@ PYBIND11_MODULE(_piomatter, m) {
                "Adafruit Matrix Bonnet or Matrix Hat")
         .value("AdafruitMatrixBonnetBGR", Pinout::AdafruitMatrixBonnetBGR,
                "Adafruit Matrix Bonnet or Matrix Hat with BGR color order")
+        .value("AdafruitMatrixBonnetRBG", Pinout::AdafruitMatrixBonnetRBG,
+               "Adafruit Matrix Bonnet or Matrix Hat with RBG color order, e.g some 2.5 pitch boards")
         .value("AdafruitMatrixHat", Pinout::AdafruitMatrixBonnet,
                "Adafruit Matrix Bonnet or Matrix Hat")
         .value("AdafruitMatrixHatBGR", Pinout::AdafruitMatrixBonnetBGR,
                "Adafruit Matrix Bonnet or Matrix Hat with BGR color order")
+        .value("AdafruitMatrixHatRBG", Pinout::AdafruitMatrixBonnetRBG,
+               "Adafruit Matrix Bonnet or Matrix Hat with BGR color order")
         .value("Active3", Pinout::Active3, "Active-3 or compatible board")
         .value("Active3BGR", Pinout::Active3BGR,
-               "Active-3 or compatible board with BGR color order");
+               "Active-3 or compatible board with BGR color order")
+        .value("Active3RBG", Pinout::Active3RBG,
+               "Active-3 or compatible board with RBG color order e.g some 2.5 pitch boards");
 
     py::enum_<Colorspace>(
         m, "Colorspace",
