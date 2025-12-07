@@ -70,7 +70,7 @@ enum Colorspace { RGB565, RGB888, RGB888Packed };
 enum Pinout {
     AdafruitMatrixBonnet,
     AdafruitMatrixBonnetBGR,
-    AdafruitMatrixBonnetRBG
+    AdafruitMatrixBonnetRBG,
     Active3,
     Active3BGR,
     Active3RBG,
